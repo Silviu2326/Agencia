@@ -8,11 +8,15 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(
-    null
-  );
+  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
   const location = useLocation();
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -21,6 +25,11 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   const navLinks = [
     {
@@ -79,7 +88,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed w-full z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || isOpen
           ? 'bg-gray-900/90 backdrop-blur-xl border-b border-gray-800'
           : 'bg-transparent'
       }`}
@@ -102,11 +111,10 @@ const Navbar = () => {
             >
               Webcraft
             </motion.span>
-            <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary-400 to-accent-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
               <div
                 key={link.path}
@@ -132,7 +140,7 @@ const Navbar = () => {
                   )}
                 </Link>
 
-                {/* Enhanced Dropdown Menu */}
+                {/* Desktop Dropdown Menu */}
                 {link.dropdownItems && activeDropdown === link.name && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -142,48 +150,32 @@ const Navbar = () => {
                     className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-64"
                   >
                     <div className="relative py-3">
-                      {/* Decorative Elements */}
                       <div className="absolute -top-1 left-1/2 transform -translate-x-1/2">
                         <div className="w-2 h-2 bg-gray-900/95 rotate-45 border-t border-l border-gray-700/50" />
                       </div>
 
                       <GlassCard className="py-2 bg-gray-900/95 border-gray-700/50">
-                        <div className="relative">
-                          {link.dropdownItems.map((item, index) => (
-                            <Link
-                              key={item.path}
-                              to={item.path}
-                              className="block relative group"
-                            >
-                              <motion.div
-                                initial={{ x: -10, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="px-4 py-3 hover:bg-gray-800/50 transition-colors relative z-10 flex items-start space-x-3"
-                              >
-                                <div className="p-2 rounded-lg bg-gray-800/50 text-primary-400 group-hover:text-accent-400 transition-colors">
-                                  {item.icon}
+                        {link.dropdownItems.map((item, index) => (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="block px-4 py-3 hover:bg-gray-800/50 transition-colors relative z-10"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <div className="p-2 rounded-lg bg-gray-800/50 text-primary-400">
+                                {item.icon}
+                              </div>
+                              <div>
+                                <div className="font-medium text-gray-200">
+                                  {item.name}
                                 </div>
-                                <div>
-                                  <div className="text-sm font-medium text-gray-200 group-hover:text-primary-400 transition-colors">
-                                    {item.name}
-                                  </div>
-                                  <div className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">
-                                    {item.description}
-                                  </div>
+                                <div className="text-xs text-gray-400">
+                                  {item.description}
                                 </div>
-
-                                {/* Hover Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-accent-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                              </motion.div>
-
-                              {/* Separator */}
-                              {index < link.dropdownItems.length - 1 && (
-                                <div className="mx-4 border-t border-gray-700/30" />
-                              )}
-                            </Link>
-                          ))}
-                        </div>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
                       </GlassCard>
                     </div>
                   </motion.div>
@@ -191,23 +183,20 @@ const Navbar = () => {
               </div>
             ))}
 
-            {/* Promo Button */}
+            {/* Desktop CTA Buttons */}
             <Link
               to="/promo"
               className="relative group overflow-hidden px-6 py-2.5 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 hover:-translate-y-0.5 flex items-center gap-2"
             >
               <Clock className="h-4 w-4" />
               <span className="relative z-10">Oferta Especial</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-red-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </Link>
 
-            {/* CTA Button */}
             <Link
               to="/contact"
               className="relative group overflow-hidden px-6 py-2.5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/25 hover:-translate-y-0.5"
             >
               <span className="relative z-10">Empezar Proyecto</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-accent-400 to-primary-400 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </Link>
           </div>
 
@@ -215,7 +204,7 @@ const Navbar = () => {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-colors"
+            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-colors"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -252,7 +241,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-gray-900/95 backdrop-blur-xl border-t border-gray-800"
+            className="lg:hidden bg-gray-900/95 backdrop-blur-xl border-t border-gray-800"
           >
             <div className="px-4 py-2 space-y-1">
               {navLinks.map((link, index) => (
@@ -305,7 +294,7 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
-              {/* Mobile Promo Button */}
+              {/* Mobile CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -314,21 +303,13 @@ const Navbar = () => {
               >
                 <Link
                   to="/promo"
-                  className="block w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium hover:shadow-lg hover:shadow-red-500/25 transition-all duration-300 flex items-center justify-center gap-2"
+                  className="block w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium hover:shadow-lg hover:shadow-red-500/25 transition-all duration-300 flex items-center justify-center gap-2 mb-4"
                   onClick={() => setIsOpen(false)}
                 >
                   <Clock className="h-4 w-4" />
                   Oferta Especial
                 </Link>
-              </motion.div>
 
-              {/* Mobile CTA */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: (navLinks.length + 1) * 0.1 }}
-                className="p-4"
-              >
                 <Link
                   to="/contact"
                   className="block w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-medium hover:shadow-lg hover:shadow-primary-500/25 transition-all duration-300"
