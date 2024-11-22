@@ -1,17 +1,34 @@
+<<<<<<< HEAD
 import React, { memo } from 'react';
+=======
+import React from 'react';
+>>>>>>> origin/main
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import {
   ArrowRight,
+<<<<<<< HEAD
   Lock,
   ExternalLink,
   Rocket,
   Shield,
   Globe,
+=======
+  Code2,
+  Rocket,
+  Zap,
+  Users,
+  Star,
+  Globe,
+  Shield,
+  Lock,
+  ExternalLink,
+>>>>>>> origin/main
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedHeroBackground from '../components/AnimatedHeroBackground';
 
+<<<<<<< HEAD
 // Componente memoizado para Servicios
 const ServiceCard = memo(({ service }) => (
   <div className="group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-primary-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10">
@@ -81,6 +98,10 @@ const Home = () => {
   });
 
   const [projectsRef, projectsInView] = useInView({
+=======
+const Home = () => {
+  const [ref, inView] = useInView({
+>>>>>>> origin/main
     triggerOnce: true,
     threshold: 0.1,
   });
@@ -160,12 +181,30 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
+<<<<<<< HEAD
             <h1 className="text-5xl md:text-7xl font-bold leading-tight text-white">
+=======
+            <motion.h1
+              className="text-5xl md:text-7xl font-bold leading-tight text-white"
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            >
+>>>>>>> origin/main
               Transformamos Ideas
               <span className="block bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-[length:200%_auto] animate-gradient text-transparent bg-clip-text">
                 en Realidad Digital
               </span>
+<<<<<<< HEAD
             </h1>
+=======
+            </motion.h1>
+>>>>>>> origin/main
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -204,14 +243,22 @@ const Home = () => {
       </section>
 
       {/* Services Section */}
+<<<<<<< HEAD
       <section ref={servicesRef} className="py-20 bg-gray-900/50 relative">
+=======
+      <section ref={ref} className="py-20 bg-gray-900/50 relative">
+>>>>>>> origin/main
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] opacity-5 bg-cover bg-center mix-blend-overlay" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
+<<<<<<< HEAD
             animate={servicesInView ? { opacity: 1, y: 0 } : {}}
+=======
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+>>>>>>> origin/main
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
@@ -223,6 +270,7 @@ const Home = () => {
             </p>
           </motion.div>
 
+<<<<<<< HEAD
           <motion.div
             initial={{ opacity: 0 }}
             animate={servicesInView ? { opacity: 1 } : {}}
@@ -233,30 +281,76 @@ const Home = () => {
               <ServiceCard key={index} service={service} />
             ))}
           </motion.div>
+=======
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-primary-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
+              >
+                <motion.div
+                  className="mb-4 p-3 bg-gray-900/50 rounded-xl inline-block"
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {service.icon}
+                </motion.div>
+                <h3 className="text-xl font-semibold text-white mb-2 bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
+                  {service.title}
+                </h3>
+                <p className="text-gray-400">{service.description}</p>
+              </motion.div>
+            ))}
+          </div>
+>>>>>>> origin/main
         </div>
       </section>
 
       {/* Stats Section */}
+<<<<<<< HEAD
       <section ref={statsRef} className="py-20 bg-gray-900/80 relative overflow-hidden">
+=======
+      <section className="py-20 bg-gray-900/80 relative overflow-hidden">
+>>>>>>> origin/main
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 to-accent-900/20">
             <div className="absolute inset-0 bg-gray-900/90" />
           </div>
+<<<<<<< HEAD
           {[...Array(1)].map((_, i) => (
+=======
+          {[...Array(3)].map((_, i) => (
+>>>>>>> origin/main
             <motion.div
               key={i}
               className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-accent-500/10 to-secondary-500/10 blur-3xl"
               animate={{
+<<<<<<< HEAD
                 scale: [1, 1.1, 1],
                 rotate: [0, 45, 0],
               }}
               transition={{
                 duration: 60 + i * 10,
+=======
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 20 + i * 2,
+>>>>>>> origin/main
                 repeat: Infinity,
                 ease: 'linear',
               }}
               style={{
+<<<<<<< HEAD
                 opacity: 0.3 - i * 0.1,
+=======
+                opacity: 0.4 - i * 0.1,
+>>>>>>> origin/main
               }}
             />
           ))}
@@ -267,14 +361,29 @@ const Home = () => {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.5 }}
+<<<<<<< HEAD
                 animate={statsInView ? { opacity: 1, scale: 1 } : {}}
+=======
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+>>>>>>> origin/main
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
                 className="text-center"
               >
                 <motion.div
                   className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary-400 to-accent-400 text-transparent bg-clip-text"
+<<<<<<< HEAD
                   style={{ backgroundSize: '200% 200%' }}
+=======
+                  animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+>>>>>>> origin/main
                 >
                   {stat.value}
                 </motion.div>
@@ -286,7 +395,11 @@ const Home = () => {
       </section>
 
       {/* Featured Projects */}
+<<<<<<< HEAD
       <section ref={projectsRef} className="py-20 bg-gray-900/90 relative">
+=======
+      <section className="py-20 bg-gray-900/90 relative">
+>>>>>>> origin/main
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 to-gray-900">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] opacity-5 bg-cover bg-center mix-blend-overlay" />
         </div>
@@ -296,6 +409,7 @@ const Home = () => {
               Proyectos Destacados
             </h2>
             <p className="text-xl text-gray-400">
+<<<<<<< HEAD
               Descubre cómo ayudamos a nuestros clientes a alcanzar sus objetivos
             </p>
           </div>
@@ -310,6 +424,66 @@ const Home = () => {
               <ProjectCard key={project.title} project={project} />
             ))}
           </motion.div>
+=======
+              Descubre cómo ayudamos a nuestros clientes a alcanzar sus
+              objetivos
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProjects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group relative overflow-hidden rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-primary-500/50 transition-all duration-300"
+              >
+                <motion.div
+                  className="relative h-64 overflow-hidden"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="text-sm font-medium text-primary-400 mb-2 block">
+                        {project.category}
+                      </span>
+                      <h3 className="text-xl font-semibold text-white mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-300 text-sm mb-4">
+                        {project.description}
+                      </p>
+                      {project.isPrivate ? (
+                        <div className="flex items-center text-gray-400 gap-2">
+                          <Lock className="h-4 w-4" />
+                          <span className="text-sm">
+                            {project.privateMessage}
+                          </span>
+                        </div>
+                      ) : (
+                        <Link
+                          to={project.link}
+                          className="inline-flex items-center text-primary-400 hover:text-primary-300"
+                        >
+                          Ver Proyecto
+                          <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+>>>>>>> origin/main
         </div>
       </section>
     </div>
